@@ -8,8 +8,8 @@ const routes = require('./routes/index.js');// import definicion de las rutas
 
 const app = express();// instancia express
 app.use(morgan("dev"));
-
-app.use(routes)
+app.use(express.json());
+app.use(routes);
 
 
 module.exports = app;

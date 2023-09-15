@@ -7,19 +7,32 @@ const getUsersHandler = (req , res) =>{
 }
 
 const postUsersHandler = (req , res) =>{
-    res.send("ruta post users")
+    try {
+        const { email , name } = req.body;
+        if(email === undefined || name === undefined ){
+            return res.status(400).send(`faltan datos para crear usuario`)
+        }
+
+
+        res.send(`Creando usuario con nombre ${name} , email ${email}`)
+        } catch (error) {
+        res.status(400).send(`${error}`)
+    }
 }
 
 const getOneUserHandler = (req , res) =>{
-    res.send("ruta get users por id")
+    const { idUser } = req.params;
+    res.send(`ruta get users por id ${idUser}`)
 }
 
 const updateOneUserHandler = (req , res) =>{
-    res.send("ruta update users por id")
+    const { idUser } = req.params;
+    res.send(`ruta update users por id ${idUser}`)
 }
 
 const deleteUserHandler = (req , res) =>{
-    res.send("ruta delete users por id")
+    const { idUser } = req.params;
+    res.send(`ruta delete users por id ${idUser}`)
 }
 
 
