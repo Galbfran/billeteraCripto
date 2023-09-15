@@ -9,9 +9,7 @@ const routes = require('./routes/index.js');// import definicion de las rutas
 const app = express();// instancia express
 app.use(morgan("dev"));
 
-app.get("/" , (req , res) => {
-    res.status(200).send("ok")
-})
+app.use(routes)
 
 
 module.exports = app;
