@@ -1,7 +1,7 @@
 const  createUser = require("../controlers/createUser");
 const { getUser, getAllUsers} = require("../controlers/getUser");
 const { datoError } = require("./funcionesAuxiliares");
-
+const modificarUsuario = require("../controlers/updateUser")
 
 
 const getUsersHandler = async (req , res) =>{
@@ -40,9 +40,16 @@ const getOneUserHandler = async(req , res) =>{
     }
 }
 
-const updateOneUserHandler = (req , res) =>{
-    const { idUser } = req.params;
-    res.send(`ruta update users por id ${idUser}`)
+const updateOneUserHandler = async(req , res) =>{
+    try {
+        const { idUser } = req.params;
+        const { dataUpdate} = req.body
+        const userUpdate = await modificarUsuario(idUser , dataUpdate )
+        res.status(200).json(userUpdate)
+        
+    } catch (error) {
+        res.status(400).send(`${error.message}`)
+    }
 }
 
 const deleteUserHandler = (req , res) =>{
