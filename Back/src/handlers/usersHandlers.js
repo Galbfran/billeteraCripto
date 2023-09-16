@@ -1,9 +1,16 @@
-const  createUser = require("../controlers/createUser")
-const { datoError } = require("./funcionesAuxiliares")
+const  createUser = require("../controlers/createUser");
+const { getUser, getAllUsers} = require("../controlers/getUser");
+const { datoError } = require("./funcionesAuxiliares");
 
 
-const getUsersHandler = (req , res) =>{
-    res.send("estoy en users")
+
+const getUsersHandler = async (req , res) =>{
+    try {
+        const users = await getAllUsers();
+        res.status(200).json(users)
+    } catch (error) {
+        res.status(400).send(`${error.message}`)
+    }
 }
 
 const postUsersHandler = async (req , res) =>{
@@ -28,7 +35,6 @@ const getOneUserHandler = async(req , res) =>{
         }
         const user = await getUser(idUser)
         res.status(200).json(user)
-        
     } catch (error) {
         res.status(400).send(`${error.message}`)
     }
