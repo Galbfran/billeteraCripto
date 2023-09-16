@@ -1,5 +1,13 @@
 const { User } = require("../db");
 
+
+/* {
+    "dataUpdate": {
+      "name": "Nuevo Nombre",
+      "email": "nuevoemail@example.com"
+    }
+  } */
+
 const modificarUsuario = async (idUser, dataUpdate) => {
   try {
     // Primero, verifica si el usuario existe

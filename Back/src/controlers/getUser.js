@@ -1,7 +1,8 @@
 const { User } = require("../db")
 
 const getUser = async(idUser) =>{
-    const usuario = await User.findByPk(idUser);
+    let usuario = await User.findByPk(idUser);
+    if(usuario === null) usuario = `Usuario no encontrado`
     return usuario;
 }
 

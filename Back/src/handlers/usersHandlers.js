@@ -1,7 +1,8 @@
 const  createUser = require("../controlers/createUser");
 const { getUser, getAllUsers} = require("../controlers/getUser");
 const { datoError } = require("./funcionesAuxiliares");
-const modificarUsuario = require("../controlers/updateUser")
+const modificarUsuario = require("../controlers/updateUser");
+const deleteUserId = require("../controlers/deleteUser")
 
 
 const getUsersHandler = async (req , res) =>{
@@ -52,9 +53,15 @@ const updateOneUserHandler = async(req , res) =>{
     }
 }
 
-const deleteUserHandler = (req , res) =>{
-    const { idUser } = req.params;
-    res.send(`ruta delete users por id ${idUser}`)
+const deleteUserHandler = async(req , res) =>{
+    try {
+        const { idUser } = req.params;
+        await deleteUserId(idUser)
+        res.status(200).send(`Usuario ${idUser} eliminado con exito`)
+        
+    } catch (error) {
+        res.status(400).send(`${error.message}`)
+    }
 }
 
 
