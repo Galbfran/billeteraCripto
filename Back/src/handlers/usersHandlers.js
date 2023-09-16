@@ -1,28 +1,37 @@
-
-
+const  createUser = require("../controlers/createUser")
+const { datoError } = require("./funcionesAuxiliares")
 
 
 const getUsersHandler = (req , res) =>{
     res.send("estoy en users")
 }
 
-const postUsersHandler = (req , res) =>{
+const postUsersHandler = async (req , res) =>{
     try {
-        const { email , name } = req.body;
-        if(email === undefined || name === undefined ){
-            return res.status(400).send(`faltan datos para crear usuario`)
+        const { email , name , password} = req.body;
+        if(email === undefined || name === undefined || password === undefined ){
+            let faltaDato = datoError(email , name , password);
+            return res.status(400).send(faltaDato)
         }
-
-
-        res.send(`Creando usuario con nombre ${name} , email ${email}`)
+        const newUser = await createUser(name , email , password);
+        res.status(200).json( newUser )
         } catch (error) {
-        res.status(400).send(`${error}`)
+        res.status(400).send(`${error.message}`)
     }
 }
 
-const getOneUserHandler = (req , res) =>{
-    const { idUser } = req.params;
-    res.send(`ruta get users por id ${idUser}`)
+const getOneUserHandler = async(req , res) =>{
+    try {
+        const { idUser } = req.params;
+        if (idUser === undefined){
+            return res.status(400).send(`El usuario no esta definido`)
+        }
+        const user = await getUser(idUser)
+        res.status(200).json(user)
+        
+    } catch (error) {
+        res.status(400).send(`${error.message}`)
+    }
 }
 
 const updateOneUserHandler = (req , res) =>{
