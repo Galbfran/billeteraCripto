@@ -1,9 +1,7 @@
 const { Router } = require('express');
-
+const { getMonedasHandler} = require("../handlers/monedasHandlers")
 const monedasRoutes = Router();
 
-monedasRoutes.get("/" , (req , res) => {
-    res.send("estoy en monedas")
-});
+monedasRoutes.get("/" , getMonedasHandler);
 
 module.exports = monedasRoutes
